@@ -16,7 +16,7 @@ services:
     build:
       context: node
     container_name: app
-    entrypoint: wait-for database:3306 -- docker-entrypoint.sh
+    entrypoint: wait-for database:3306 -- app-entrypoint.sh
     command: node src/index.js
     environment:
       - DB_HOST=database
