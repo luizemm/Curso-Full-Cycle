@@ -1,6 +1,7 @@
-import OrderItem from "./order_item"
+import Order from "./order-interface"
+import OrderItem from "./order_item-interface"
 
-export default class Order {
+export default class OrderImpl implements Order {
     private _id: string
     private _customerId: string
     private _items: OrderItem[]

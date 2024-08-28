@@ -1,8 +1,9 @@
 import { Sequelize } from "sequelize-typescript"
 import CustomerModel from "../../../../../infrastructure/customer/repository/sequelize/customer.model"
-import Customer from "../../../../../domain/customer/entity/customer"
+import CustomerImpl from "../../../../../domain/customer/entity/customer"
 import CustomerRepositoryImpl from "../../../../../infrastructure/customer/repository/sequelize/customer.repository"
-import Address from "../../../../../domain/customer/value-object/address"
+import AddressImpl from "../../../../../domain/customer/value-object/address"
+import Customer from "../../../../../domain/customer/entity/customer-interface"
 
 describe("Customer repository test", () => {
     let sequelize: Sequelize
@@ -25,8 +26,8 @@ describe("Customer repository test", () => {
 
     it("should create a customer", async () => {
         const customerRepository = new CustomerRepositoryImpl()
-        const customer = new Customer("1", "customer 1")
-        const address = new Address(
+        const customer = new CustomerImpl("1", "customer 1")
+        const address = new AddressImpl(
             "Street 1",
             123,
             "12345-678",
@@ -55,7 +56,7 @@ describe("Customer repository test", () => {
 
     it("should create a customer without address", async () => {
         const customerRepository = new CustomerRepositoryImpl()
-        const customer = new Customer("1", "customer 1")
+        const customer = new CustomerImpl("1", "customer 1")
 
         await customerRepository.create(customer)
 
@@ -77,8 +78,8 @@ describe("Customer repository test", () => {
 
     it("should update a customer", async () => {
         const customerRepository = new CustomerRepositoryImpl()
-        const customer = new Customer("1", "customer 1")
-        const address = new Address(
+        const customer = new CustomerImpl("1", "customer 1")
+        const address = new AddressImpl(
             "Street 1",
             123,
             "12345-678",
@@ -133,8 +134,8 @@ describe("Customer repository test", () => {
 
     it("should find a customer by id", async () => {
         const customerRepository = new CustomerRepositoryImpl()
-        const customer = new Customer("1", "customer 1")
-        const address = new Address(
+        const customer = new CustomerImpl("1", "customer 1")
+        const address = new AddressImpl(
             "Street 1",
             123,
             "12345-678",
@@ -172,8 +173,8 @@ describe("Customer repository test", () => {
 
     it("should return null when not found a customer by id", async () => {
         const customerRepository = new CustomerRepositoryImpl()
-        const customer = new Customer("1", "customer 1")
-        const address = new Address(
+        const customer = new CustomerImpl("1", "customer 1")
+        const address = new AddressImpl(
             "Street 1",
             123,
             "12345-678",
@@ -201,8 +202,8 @@ describe("Customer repository test", () => {
     it("should find all customers", async () => {
         const customerRepository = new CustomerRepositoryImpl()
 
-        const customer1 = new Customer("1", "customer 1")
-        const address1 = new Address(
+        const customer1 = new CustomerImpl("1", "customer 1")
+        const address1 = new AddressImpl(
             "Street 1",
             123,
             "12345-678",
@@ -210,8 +211,13 @@ describe("Customer repository test", () => {
         )
         customer1.changeAddress(address1)
 
-        const customer2 = new Customer("2", "customer 2")
-        const address2 = new Address("Street 2", 123, "12345-678", "São Paulo")
+        const customer2 = new CustomerImpl("2", "customer 2")
+        const address2 = new AddressImpl(
+            "Street 2",
+            123,
+            "12345-678",
+            "São Paulo"
+        )
         customer2.changeAddress(address2)
 
         const expectedCustomers = [customer1, customer2]

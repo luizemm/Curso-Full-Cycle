@@ -1,12 +1,13 @@
-import Order from "../../../../domain/checkout/entity/order"
-import OrderItem from "../../../../domain/checkout/entity/order_item"
+import OrderImpl from "../../../../domain/checkout/entity/order"
+import Order from "../../../../domain/checkout/entity/order-interface"
+import OrderItemImpl from "../../../../domain/checkout/entity/order_item"
 import OrderModel from "./order.model"
 
 export default class OrderMapper {
     static toEntity(model: OrderModel): Order {
         const items = model.items.map(
             itemModel =>
-                new OrderItem(
+                new OrderItemImpl(
                     itemModel.id,
                     itemModel.name,
                     itemModel.price,
@@ -15,6 +16,6 @@ export default class OrderMapper {
                 )
         )
 
-        return new Order(model.id, model.customer_id, items)
+        return new OrderImpl(model.id, model.customer_id, items)
     }
 }

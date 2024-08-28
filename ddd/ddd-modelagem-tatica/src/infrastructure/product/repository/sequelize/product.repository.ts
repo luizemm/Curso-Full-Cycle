@@ -1,4 +1,5 @@
-import Product from "../../../../domain/product/entity/product"
+import ProductA from "../../../../domain/product/entity/product-a"
+import Product from "../../../../domain/product/entity/product-interface"
 import ProductRepository from "../../../../domain/product/repository/product-interface.repository"
 import ProductModel from "./product.model"
 
@@ -26,7 +27,7 @@ export default class ProductRepositoryImpl implements ProductRepository {
 
         if (!productModel) return null
 
-        return new Product(
+        return new ProductA(
             productModel.id,
             productModel.name,
             productModel.price
@@ -35,7 +36,7 @@ export default class ProductRepositoryImpl implements ProductRepository {
     async findAll(): Promise<Product[]> {
         const products = await ProductModel.findAll()
         return products.map(
-            product => new Product(product.id, product.name, product.price)
+            product => new ProductA(product.id, product.name, product.price)
         )
     }
 }

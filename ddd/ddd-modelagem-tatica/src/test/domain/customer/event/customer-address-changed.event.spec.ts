@@ -1,9 +1,11 @@
-import Address from "../../../../domain/customer/value-object/address"
-import Customer from "../../../../domain/customer/entity/customer"
+import AddressImpl from "../../../../domain/customer/value-object/address"
+import CustomerImpl from "../../../../domain/customer/entity/customer"
 import EventDispatcher from "../../../../domain/@shared/event/dispatcher-interface.event"
 import EventDispatcherImpl from "../../../../domain/@shared/event/dispatcher.event"
 import CustomerAddressChangedEvent from "../../../../domain/customer/event/customer-address-changed.event"
 import LogWhenCustomerAddressIsChanged from "../../../../domain/customer/event/handlers/log-when-customer-address-is-changed.handler"
+import Customer from "../../../../domain/customer/entity/customer-interface"
+import Address from "../../../../domain/customer/value-object/address-interface"
 
 describe("Customer address changed event", () => {
     it("should log the id, name and address of a customer when their address is changed", () => {
@@ -16,8 +18,8 @@ describe("Customer address changed event", () => {
 
         eventDispatcher.register(CustomerAddressChangedEvent.name, logHandler)
 
-        const customer = new Customer("1", "Customer 1")
-        const address = new Address("Street 1", 123, "12345-678", "BH")
+        const customer = new CustomerImpl("1", "Customer 1")
+        const address = new AddressImpl("Street 1", 123, "12345-678", "BH")
 
         const event = simulateCustomerAddressChangeUseCase(
             customer,

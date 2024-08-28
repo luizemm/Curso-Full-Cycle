@@ -1,4 +1,4 @@
-import Customer from "../../../../domain/customer/entity/customer"
+import Customer from "../../../../domain/customer/entity/customer-interface"
 import CustomerRepository from "../../../../domain/customer/repository/customer-interface.repository"
 import CustomerMapper from "./customer.mapper"
 import CustomerModel from "./customer.model"

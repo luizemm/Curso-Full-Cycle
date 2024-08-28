@@ -1,19 +1,19 @@
-import Address from "../../../../domain/customer/value-object/address"
-import Customer from "../../../../domain/customer/entity/customer"
+import AddressImpl from "../../../../domain/customer/value-object/address"
+import CustomerImpl from "../../../../domain/customer/entity/customer"
 
 describe("Customer unit tests", () => {
     it("should throw error when id is empty", () => {
-        expect(() => new Customer("", "Fulano")).toThrow("Id is required")
+        expect(() => new CustomerImpl("", "Fulano")).toThrow("Id is required")
     })
 
     it("should throw error when name is empty", () => {
-        expect(() => new Customer("123", "")).toThrow("Name is required")
+        expect(() => new CustomerImpl("123", "")).toThrow("Name is required")
     })
 
     it("should change name", () => {
         // Arrange
         const newName = "Ciclano"
-        const customer = new Customer("123", "Fulano")
+        const customer = new CustomerImpl("123", "Fulano")
 
         // Act
         customer.changeName(newName)
@@ -24,8 +24,13 @@ describe("Customer unit tests", () => {
 
     it("should activate customer", () => {
         // Arrange
-        const customer = new Customer("1", "Customer 1")
-        const address = new Address("Rua 1", 123, "12345-678", "Belo Horizonte")
+        const customer = new CustomerImpl("1", "Customer 1")
+        const address = new AddressImpl(
+            "Rua 1",
+            123,
+            "12345-678",
+            "Belo Horizonte"
+        )
         customer.changeAddress(address)
 
         // Act
@@ -37,8 +42,13 @@ describe("Customer unit tests", () => {
 
     it("should deactivate customer", () => {
         // Arrange
-        const customer = new Customer("1", "Customer 1")
-        const address = new Address("Rua 1", 123, "12345-678", "Belo Horizonte")
+        const customer = new CustomerImpl("1", "Customer 1")
+        const address = new AddressImpl(
+            "Rua 1",
+            123,
+            "12345-678",
+            "Belo Horizonte"
+        )
         customer.changeAddress(address)
 
         // Act
@@ -50,13 +60,13 @@ describe("Customer unit tests", () => {
 
     it("should throw error if address is undefined when activate a customer", () => {
         expect(() => {
-            const customer = new Customer("1", "Customer 1")
+            const customer = new CustomerImpl("1", "Customer 1")
             customer.activate()
         }).toThrow("Address is mandatory to activate a customer")
     })
 
     it("should add reward points", () => {
-        const customer = new Customer("1", "Customer 1")
+        const customer = new CustomerImpl("1", "Customer 1")
 
         customer.addRewardPoints(10)
         expect(customer.rewardPoints).toBe(10)

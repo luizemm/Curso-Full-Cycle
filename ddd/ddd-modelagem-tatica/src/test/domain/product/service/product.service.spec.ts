@@ -1,11 +1,11 @@
-import Product from "../../../../domain/product/entity/product"
+import ProductA from "../../../../domain/product/entity/product-a"
 import ProductService from "../../../../domain/product/service/product.service"
 
 describe("Product service unit tests", () => {
     it("should change the prices of all products", () => {
-        const product1 = new Product("1", "product 1", 10)
-        const product2 = new Product("2", "product 2", 40)
-        const product3 = new Product("3", "product 3", 112)
+        const product1 = new ProductA("1", "product 1", 10)
+        const product2 = new ProductA("2", "product 2", 40)
+        const product3 = new ProductA("3", "product 3", 112)
 
         const products = [product1, product2, product3]
 

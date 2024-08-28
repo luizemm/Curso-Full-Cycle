@@ -1,7 +1,8 @@
-import Customer from "../../customer/entity/customer"
-import Order from "../entity/order"
-import OrderItem from "../entity/order_item"
 import { v4 as uuid } from "uuid"
+import Customer from "../../customer/entity/customer-interface"
+import OrderImpl from "../entity/order"
+import OrderItem from "../entity/order_item-interface"
+import Order from "../entity/order-interface"
 
 export default class OrderService {
     static total(orders: Order[]) {
@@ -11,7 +12,7 @@ export default class OrderService {
     static placeOrder(customer: Customer, items: OrderItem[]): Order {
         if (!items || items.length === 0) throw new Error("Items is required")
 
-        const order = new Order(uuid(), customer.id, items)
+        const order = new OrderImpl(uuid(), customer.id, items)
 
         customer.addRewardPoints(order.total() / 2)
 

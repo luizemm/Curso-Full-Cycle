@@ -1,4 +1,4 @@
-import Customer from "../../../../domain/customer/entity/customer"
+import CustomerImpl from "../../../../domain/customer/entity/customer"
 import EventDispatcher from "../../../../domain/@shared/event/dispatcher-interface.event"
 import EventDispatcherImpl from "../../../../domain/@shared/event/dispatcher.event"
 import CustomerCreatedEvent from "../../../../domain/customer/event/customer-created.event"
@@ -39,7 +39,7 @@ describe("Customer created event", () => {
 function simulateCustomerCreationUseCase(
     eventDispatcher: EventDispatcher
 ): CustomerCreatedEvent {
-    const customer = new Customer("1", "Customer 1")
+    const customer = new CustomerImpl("1", "Customer 1")
 
     const event = new CustomerCreatedEvent({
         id: customer.id,

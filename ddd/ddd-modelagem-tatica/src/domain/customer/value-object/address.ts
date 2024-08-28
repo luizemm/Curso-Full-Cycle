@@ -1,5 +1,7 @@
+import Address from "./address-interface"
+
 // Value object (Objeto de valor)
-export default class Address {
+export default class AddressImpl implements Address {
     private _street: string
     private _number: number
     private _zip: string

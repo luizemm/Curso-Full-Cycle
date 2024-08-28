@@ -1,7 +1,8 @@
-import Address from "../value-object/address"
+import Address from "../value-object/address-interface"
+import Customer from "./customer-interface"
 
 // Entidade de NEGÓCIO
-export default class Customer {
+export default class CustomerImpl implements Customer {
     private _id: string
     private _name: string
     private _address?: Address

@@ -1,4 +1,6 @@
-export default class OrderItem {
+import OrderItem from "./order_item-interface"
+
+export default class OrderItemImpl implements OrderItem {
     private _id: string
     private _productId: string
     private _name: string

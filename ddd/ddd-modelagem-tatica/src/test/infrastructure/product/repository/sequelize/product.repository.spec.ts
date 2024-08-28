@@ -1,7 +1,8 @@
 import { Sequelize } from "sequelize-typescript"
 import ProductModel from "../../../../../infrastructure/product/repository/sequelize/product.model"
 import ProductRepositoryImpl from "../../../../../infrastructure/product/repository/sequelize/product.repository"
-import Product from "../../../../../domain/product/entity/product"
+import ProductA from "../../../../../domain/product/entity/product-a"
+import Product from "../../../../../domain/product/entity/product-interface"
 
 describe("Product repository test", () => {
     let sequelize: Sequelize
@@ -24,7 +25,7 @@ describe("Product repository test", () => {
 
     it("should create a product", async () => {
         const productRepository = new ProductRepositoryImpl()
-        const product = new Product("1", "product 1", 20)
+        const product = new ProductA("1", "product 1", 20)
 
         await productRepository.create(product)
 
@@ -39,7 +40,7 @@ describe("Product repository test", () => {
 
     it("should update a product", async () => {
         const productRepository = new ProductRepositoryImpl()
-        const product = new Product("1", "product 1", 20)
+        const product = new ProductA("1", "product 1", 20)
 
         await ProductModel.create({
             id: product.id,
@@ -63,7 +64,7 @@ describe("Product repository test", () => {
 
     it("should find a product by id", async () => {
         const productRepository = new ProductRepositoryImpl()
-        const product = new Product("1", "product 1", 20)
+        const product = new ProductA("1", "product 1", 20)
 
         const expectedProduct = {
             id: product.id,
@@ -84,7 +85,7 @@ describe("Product repository test", () => {
 
     it("should return null when not found product by id", async () => {
         const productRepository = new ProductRepositoryImpl()
-        const product = new Product("1", "product 1", 20)
+        const product = new ProductA("1", "product 1", 20)
 
         const expectedProduct = {
             id: product.id,
@@ -99,8 +100,8 @@ describe("Product repository test", () => {
 
     it("should find all products", async () => {
         const productRepository = new ProductRepositoryImpl()
-        const product1 = new Product("1", "product 1", 20)
-        const product2 = new Product("2", "product 2", 26)
+        const product1 = new ProductA("1", "product 1", 20)
+        const product2 = new ProductA("2", "product 2", 26)
 
         const entityToModel = (product: Product) => ({
             id: product.id,

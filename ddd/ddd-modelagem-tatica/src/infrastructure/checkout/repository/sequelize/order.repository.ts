@@ -1,4 +1,4 @@
-import Order from "../../../../domain/checkout/entity/order"
+import Order from "../../../../domain/checkout/entity/order-interface"
 import OrderRepository from "../../../../domain/checkout/repository/order-interface.repository"
 import { getDeltas } from "../../../@shared/repository/db.utils"
 import OrderMapper from "./order.mapper"

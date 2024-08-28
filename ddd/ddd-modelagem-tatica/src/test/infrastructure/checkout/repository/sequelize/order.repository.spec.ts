@@ -2,15 +2,16 @@ import { Sequelize } from "sequelize-typescript"
 import CustomerModel from "../../../../../infrastructure/customer/repository/sequelize/customer.model"
 import ProductModel from "../../../../../infrastructure/product/repository/sequelize/product.model"
 import CustomerRepositoryImpl from "../../../../../infrastructure/customer/repository/sequelize/customer.repository"
-import Customer from "../../../../../domain/customer/entity/customer"
-import Address from "../../../../../domain/customer/value-object/address"
+import CustomerImpl from "../../../../../domain/customer/entity/customer"
+import AddressImpl from "../../../../../domain/customer/value-object/address"
 import ProductRepositoryImpl from "../../../../../infrastructure/product/repository/sequelize/product.repository"
-import Product from "../../../../../domain/product/entity/product"
-import OrderItem from "../../../../../domain/checkout/entity/order_item"
-import Order from "../../../../../domain/checkout/entity/order"
+import ProductA from "../../../../../domain/product/entity/product-a"
+import OrderItemImpl from "../../../../../domain/checkout/entity/order_item"
+import OrderImpl from "../../../../../domain/checkout/entity/order"
 import OrderModel from "../../../../../infrastructure/checkout/repository/sequelize/order.model"
 import OrderItemModel from "../../../../../infrastructure/checkout/repository/sequelize/order_item.model"
 import OrderRepositoryImpl from "../../../../../infrastructure/checkout/repository/sequelize/order.repository"
+import Order from "../../../../../domain/checkout/entity/order-interface"
 
 describe("Order repository test", () => {
     let sequelize: Sequelize
@@ -39,19 +40,19 @@ describe("Order repository test", () => {
     it("should create an order", async () => {
         const customerRepository = new CustomerRepositoryImpl()
         const customerId = "123"
-        const customer = new Customer(customerId, "Customer 1")
-        const address = new Address("Street 1", 1, "12345-678", "City 1")
+        const customer = new CustomerImpl(customerId, "Customer 1")
+        const address = new AddressImpl("Street 1", 1, "12345-678", "City 1")
         customer.changeAddress(address)
         await customerRepository.create(customer)
 
         const productId = "1"
         const productRepository = new ProductRepositoryImpl()
-        const product = new Product(productId, "product 1", 12)
+        const product = new ProductA(productId, "product 1", 12)
         await productRepository.create(product)
 
         const orderRepository = new OrderRepositoryImpl()
-        const orderItem1 = new OrderItem("1", "item 1", 12, productId, 1)
-        const order = new Order("1", customerId, [orderItem1])
+        const orderItem1 = new OrderItemImpl("1", "item 1", 12, productId, 1)
+        const order = new OrderImpl("1", customerId, [orderItem1])
 
         await orderRepository.create(order)
 
@@ -77,19 +78,19 @@ describe("Order repository test", () => {
     it("should insert a new order item in order", async () => {
         const customerRepository = new CustomerRepositoryImpl()
         const customerId = "123"
-        const customer = new Customer(customerId, "Customer 1")
-        const address = new Address("Street 1", 1, "12345-678", "City 1")
+        const customer = new CustomerImpl(customerId, "Customer 1")
+        const address = new AddressImpl("Street 1", 1, "12345-678", "City 1")
         customer.changeAddress(address)
         await customerRepository.create(customer)
 
         const productId1 = "1"
         const productRepository = new ProductRepositoryImpl()
-        const product1 = new Product(productId1, "product 1", 12)
+        const product1 = new ProductA(productId1, "product 1", 12)
         await productRepository.create(product1)
 
         const orderRepository = new OrderRepositoryImpl()
-        const orderItem1 = new OrderItem("1", "item 1", 12, productId1, 1)
-        const order = new Order("1", customerId, [orderItem1])
+        const orderItem1 = new OrderItemImpl("1", "item 1", 12, productId1, 1)
+        const order = new OrderImpl("1", customerId, [orderItem1])
 
         await OrderModel.create(
             {
@@ -109,10 +110,10 @@ describe("Order repository test", () => {
         )
 
         const productId2 = "2"
-        const product2 = new Product(productId2, "product 2", 15)
+        const product2 = new ProductA(productId2, "product 2", 15)
         await productRepository.create(product2)
 
-        const orderItem2 = new OrderItem("2", "item 2", 15, productId2, 4)
+        const orderItem2 = new OrderItemImpl("2", "item 2", 15, productId2, 4)
         order.items.push(orderItem2)
 
         await orderRepository.update(order)
@@ -139,19 +140,19 @@ describe("Order repository test", () => {
     it("should update an order item from an order", async () => {
         const customerRepository = new CustomerRepositoryImpl()
         const customerId = "123"
-        const customer = new Customer(customerId, "Customer 1")
-        const address = new Address("Street 1", 1, "12345-678", "City 1")
+        const customer = new CustomerImpl(customerId, "Customer 1")
+        const address = new AddressImpl("Street 1", 1, "12345-678", "City 1")
         customer.changeAddress(address)
         await customerRepository.create(customer)
 
         const productId = "1"
         const productRepository = new ProductRepositoryImpl()
-        const product = new Product(productId, "product 1", 12)
+        const product = new ProductA(productId, "product 1", 12)
         await productRepository.create(product)
 
         const orderRepository = new OrderRepositoryImpl()
-        const orderItem1 = new OrderItem("1", "item 1", 12, productId, 1)
-        const order = new Order("1", customerId, [orderItem1])
+        const orderItem1 = new OrderItemImpl("1", "item 1", 12, productId, 1)
+        const order = new OrderImpl("1", customerId, [orderItem1])
 
         await OrderModel.create(
             {
@@ -196,19 +197,19 @@ describe("Order repository test", () => {
     it("should remove an order item from an order", async () => {
         const customerRepository = new CustomerRepositoryImpl()
         const customerId = "123"
-        const customer = new Customer(customerId, "Customer 1")
-        const address = new Address("Street 1", 1, "12345-678", "City 1")
+        const customer = new CustomerImpl(customerId, "Customer 1")
+        const address = new AddressImpl("Street 1", 1, "12345-678", "City 1")
         customer.changeAddress(address)
         await customerRepository.create(customer)
 
         const productId = "1"
         const productRepository = new ProductRepositoryImpl()
-        const product = new Product(productId, "product 1", 12)
+        const product = new ProductA(productId, "product 1", 12)
         await productRepository.create(product)
 
         const orderRepository = new OrderRepositoryImpl()
-        const orderItem1 = new OrderItem("1", "item 1", 12, productId, 1)
-        const order = new Order("1", customerId, [orderItem1])
+        const orderItem1 = new OrderItemImpl("1", "item 1", 12, productId, 1)
+        const order = new OrderImpl("1", customerId, [orderItem1])
 
         await OrderModel.create(
             {
@@ -254,19 +255,30 @@ describe("Order repository test", () => {
         await expect(async () => {
             const customerRepository = new CustomerRepositoryImpl()
             const customerId = "123"
-            const customer = new Customer(customerId, "Customer 1")
-            const address = new Address("Street 1", 1, "12345-678", "City 1")
+            const customer = new CustomerImpl(customerId, "Customer 1")
+            const address = new AddressImpl(
+                "Street 1",
+                1,
+                "12345-678",
+                "City 1"
+            )
             customer.changeAddress(address)
             await customerRepository.create(customer)
 
             const productId = "1"
             const productRepository = new ProductRepositoryImpl()
-            const product = new Product(productId, "product 1", 12)
+            const product = new ProductA(productId, "product 1", 12)
             await productRepository.create(product)
 
             const orderRepository = new OrderRepositoryImpl()
-            const orderItem1 = new OrderItem("1", "item 1", 12, productId, 1)
-            const order = new Order("1", customerId, [orderItem1])
+            const orderItem1 = new OrderItemImpl(
+                "1",
+                "item 1",
+                12,
+                productId,
+                1
+            )
+            const order = new OrderImpl("1", customerId, [orderItem1])
 
             await orderRepository.update(order)
         }).rejects.toThrow("Order not found with given id")
@@ -275,19 +287,19 @@ describe("Order repository test", () => {
     it("should find an order by id", async () => {
         const customerRepository = new CustomerRepositoryImpl()
         const customerId = "123"
-        const customer = new Customer(customerId, "Customer 1")
-        const address = new Address("Street 1", 1, "12345-678", "City 1")
+        const customer = new CustomerImpl(customerId, "Customer 1")
+        const address = new AddressImpl("Street 1", 1, "12345-678", "City 1")
         customer.changeAddress(address)
         await customerRepository.create(customer)
 
         const productId = "1"
         const productRepository = new ProductRepositoryImpl()
-        const product = new Product(productId, "product 1", 12)
+        const product = new ProductA(productId, "product 1", 12)
         await productRepository.create(product)
 
         const orderRepository = new OrderRepositoryImpl()
-        const orderItem1 = new OrderItem("1", "item 1", 12, productId, 1)
-        const order = new Order("1", customerId, [orderItem1])
+        const orderItem1 = new OrderItemImpl("1", "item 1", 12, productId, 1)
+        const order = new OrderImpl("1", customerId, [orderItem1])
 
         const expectedOrder = {
             id: order.id,
@@ -323,19 +335,19 @@ describe("Order repository test", () => {
     it("should return null when not found an order by id", async () => {
         const customerRepository = new CustomerRepositoryImpl()
         const customerId = "123"
-        const customer = new Customer(customerId, "Customer 1")
-        const address = new Address("Street 1", 1, "12345-678", "City 1")
+        const customer = new CustomerImpl(customerId, "Customer 1")
+        const address = new AddressImpl("Street 1", 1, "12345-678", "City 1")
         customer.changeAddress(address)
         await customerRepository.create(customer)
 
         const productId = "1"
         const productRepository = new ProductRepositoryImpl()
-        const product = new Product(productId, "product 1", 12)
+        const product = new ProductA(productId, "product 1", 12)
         await productRepository.create(product)
 
         const orderRepository = new OrderRepositoryImpl()
-        const orderItem1 = new OrderItem("1", "item 1", 12, productId, 1)
-        const order = new Order("1", customerId, [orderItem1])
+        const orderItem1 = new OrderItemImpl("1", "item 1", 12, productId, 1)
+        const order = new OrderImpl("1", customerId, [orderItem1])
 
         await OrderModel.create(
             {
@@ -362,22 +374,22 @@ describe("Order repository test", () => {
     it("should find all orders", async () => {
         const customerRepository = new CustomerRepositoryImpl()
         const customerId1 = "123"
-        const customer1 = new Customer("123", "Customer 1")
-        const address1 = new Address("Street 1", 1, "12345-678", "City 1")
+        const customer1 = new CustomerImpl("123", "Customer 1")
+        const address1 = new AddressImpl("Street 1", 1, "12345-678", "City 1")
         customer1.changeAddress(address1)
         await customerRepository.create(customer1)
 
         const productId1 = "1"
         const productRepository = new ProductRepositoryImpl()
-        const product1 = new Product(productId1, "product 1", 12)
+        const product1 = new ProductA(productId1, "product 1", 12)
         await productRepository.create(product1)
 
         const orderRepository = new OrderRepositoryImpl()
-        const orderItem1 = new OrderItem("1", "item 1", 12, productId1, 1)
-        const order1 = new Order("1", customerId1, [orderItem1])
+        const orderItem1 = new OrderItemImpl("1", "item 1", 12, productId1, 1)
+        const order1 = new OrderImpl("1", customerId1, [orderItem1])
 
-        const orderItem2 = new OrderItem("2", "item 2", 12, productId1, 5)
-        const order2 = new Order("2", customerId1, [orderItem2])
+        const orderItem2 = new OrderItemImpl("2", "item 2", 12, productId1, 5)
+        const order2 = new OrderImpl("2", customerId1, [orderItem2])
 
         const expectedOrders = [order1, order2]
 
