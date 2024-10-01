@@ -1,0 +1,19 @@
+GET http://localhost:8080/product/fda3f751-df3d-4f96-b8ba-e6badbccd990 HTTP/1.1
+
+###
+
+POST http://localhost:8080/product HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Product 1",
+    "price": -100
+}
+
+###
+
+PATCH http://localhost:8080/product/fda3f751-df3d-4f96-b8ba-e6badbccd990/enable HTTP/1.1
+
+###
+
+PATCH http://localhost:8080/product/fda3f751-df3d-4f96-b8ba-e6badbccd990/disable HTTP/1.1
