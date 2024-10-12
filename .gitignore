@@ -1,5 +1,4 @@
-node_modules
 .vscode
 
-# DDD
-DDD/ddd-modelagem-tatica/dist
+node_modules
+dist
