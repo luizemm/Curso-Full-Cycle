@@ -1,3 +1,3 @@
-# DDD Modelagem Tática
+# Clean architecture
 
-Projeto com o objetivo de aprender a modelagem tática do DDD
+A project with the goal of learning clean architecture.
