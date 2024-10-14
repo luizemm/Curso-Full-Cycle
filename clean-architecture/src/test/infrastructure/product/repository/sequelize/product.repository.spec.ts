@@ -51,7 +51,7 @@ describe("Product repository test", () => {
         product.changeName("product X")
         product.changePrice(244)
 
-        productRepository.update(product)
+        await productRepository.update(product)
 
         const productModel = await ProductModel.findOne({ where: { id: "1" } })
 

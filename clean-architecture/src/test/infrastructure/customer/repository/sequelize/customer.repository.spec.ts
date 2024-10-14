@@ -116,7 +116,7 @@ describe("Customer repository test", () => {
         customer.activate()
         customer.addRewardPoints(10)
 
-        customerRepository.update(customer)
+        await customerRepository.update(customer)
 
         customerModel = await CustomerModel.findOne({ where: { id: "1" } })
 
