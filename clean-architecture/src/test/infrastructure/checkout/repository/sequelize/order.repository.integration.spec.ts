@@ -13,7 +13,7 @@ import OrderItemModel from "../../../../../infrastructure/checkout/repository/se
 import OrderRepositoryImpl from "../../../../../infrastructure/checkout/repository/sequelize/order.repository"
 import Order from "../../../../../domain/checkout/entity/order-interface"
 
-describe("Order repository test", () => {
+describe("Integration test sequelize order repository", () => {
     let sequelize: Sequelize
 
     beforeEach(async () => {

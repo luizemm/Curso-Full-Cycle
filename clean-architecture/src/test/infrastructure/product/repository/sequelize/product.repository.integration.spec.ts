@@ -4,7 +4,7 @@ import ProductRepositoryImpl from "../../../../../infrastructure/product/reposit
 import ProductA from "../../../../../domain/product/entity/product-a"
 import Product from "../../../../../domain/product/entity/product-interface"
 
-describe("Product repository test", () => {
+describe("Integration test sequelize product repository", () => {
     let sequelize: Sequelize
 
     beforeEach(async () => {

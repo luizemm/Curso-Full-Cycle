@@ -5,7 +5,7 @@ import CustomerRepositoryImpl from "../../../../../infrastructure/customer/repos
 import AddressImpl from "../../../../../domain/customer/value-object/address"
 import Customer from "../../../../../domain/customer/entity/customer-interface"
 
-describe("Customer repository test", () => {
+describe("Integration test sequelize customer repository", () => {
     let sequelize: Sequelize
 
     beforeEach(async () => {
