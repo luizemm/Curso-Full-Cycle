@@ -9,17 +9,15 @@ import {
     OutputUpdateProductDto,
 } from "../../../../usecase/product/update/update.product.dto"
 import UpdateProductUseCase from "../../../../usecase/product/update/update.product.usecase"
-import {
-    createDbInstance,
-    DatabaseTestConfig,
-} from "../../../@config/database/database.test.config"
+import { createDbInstance } from "../../../@config/database/database.test.config"
+import Database from "../../../../infrastructure/database/database-interface"
 
 const product = ProductFactory.create(ProductType.PRODUCT_A, "Product 1", 100)
 
 let input: InputUpdateProductDto
 
 describe("Integration test update product", () => {
-    let db: DatabaseTestConfig
+    let db: Database
 
     beforeEach(async () => {
         db = createDbInstance([DatabaseTable.PRODUCT])

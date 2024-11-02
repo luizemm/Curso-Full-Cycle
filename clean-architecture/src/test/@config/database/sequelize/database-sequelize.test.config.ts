@@ -1,11 +1,11 @@
 import { ModelCtor, Sequelize } from "sequelize-typescript"
-import { DatabaseTestConfig } from "../database.test.config"
 import ValidationError from "../../../../error/validation.error"
 import DatabaseTable from "../../../../infrastructure/@shared/repository/tables.enum"
 import CustomerModel from "../../../../infrastructure/customer/repository/sequelize/customer.model"
 import OrderModel from "../../../../infrastructure/checkout/repository/sequelize/order.model"
 import OrderItemModel from "../../../../infrastructure/checkout/repository/sequelize/order_item.model"
 import ProductModel from "../../../../infrastructure/product/repository/sequelize/product.model"
+import Database from "../../../../infrastructure/database/database-interface"
 
 const MODEL: Record<DatabaseTable, ModelCtor> = {
     customer: CustomerModel,
@@ -14,7 +14,7 @@ const MODEL: Record<DatabaseTable, ModelCtor> = {
     product: ProductModel,
 }
 
-export default class SequelizeDatabaseTestConfig implements DatabaseTestConfig {
+export default class SequelizeDatabaseTestConfig implements Database {
     private sequelize: Sequelize | undefined
     private readonly models: ModelCtor[]
 

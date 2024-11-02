@@ -1,11 +1,6 @@
 import DatabaseTable from "../../../infrastructure/@shared/repository/tables.enum"
+import Database from "../../../infrastructure/database/database-interface"
 import SequelizeDatabaseTestConfig from "./sequelize/database-sequelize.test.config"
 
-export interface DatabaseTestConfig {
-    init(): Promise<void>
-    close(): Promise<void>
-}
-
-export const createDbInstance = (
-    useTables: DatabaseTable[]
-): DatabaseTestConfig => new SequelizeDatabaseTestConfig(useTables)
+export const createDbInstance = (useTables: DatabaseTable[]): Database =>
+    new SequelizeDatabaseTestConfig(useTables)

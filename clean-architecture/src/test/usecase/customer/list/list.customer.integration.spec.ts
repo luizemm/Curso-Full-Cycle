@@ -11,10 +11,8 @@ import {
     OutputListCustomerDto,
 } from "../../../../usecase/customer/list/list.customer.dto"
 import ListCustomerUseCase from "../../../../usecase/customer/list/list.customer.usecase"
-import {
-    createDbInstance,
-    DatabaseTestConfig,
-} from "../../../@config/database/database.test.config"
+import { createDbInstance } from "../../../@config/database/database.test.config"
+import Database from "../../../../infrastructure/database/database-interface"
 
 const customers = [
     CustomerFactory.createWithAddress(
@@ -45,7 +43,7 @@ const createCustomer = async (
 ) => await repository.create(customer)
 
 describe("Integration test list customer use case", () => {
-    let db: DatabaseTestConfig
+    let db: Database
 
     beforeEach(async () => {
         db = createDbInstance([DatabaseTable.CUSTOMER])

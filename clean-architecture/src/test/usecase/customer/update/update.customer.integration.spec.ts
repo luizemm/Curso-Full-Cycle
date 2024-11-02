@@ -11,10 +11,8 @@ import {
     OutputUpdateCustomerDto,
 } from "../../../../usecase/customer/update/update.customer.dto"
 import UpdateCustomerUseCase from "../../../../usecase/customer/update/update.customer.usecase"
-import {
-    createDbInstance,
-    DatabaseTestConfig,
-} from "../../../@config/database/database.test.config"
+import { createDbInstance } from "../../../@config/database/database.test.config"
+import Database from "../../../../infrastructure/database/database-interface"
 
 const customer: Customer = CustomerFactory.createWithAddress(
     "John",
@@ -23,7 +21,7 @@ const customer: Customer = CustomerFactory.createWithAddress(
 let input: InputUpdateCustomerDto
 
 describe("Unit test update customer use case", () => {
-    let db: DatabaseTestConfig
+    let db: Database
 
     beforeEach(async () => {
         db = createDbInstance([DatabaseTable.CUSTOMER])

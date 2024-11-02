@@ -9,13 +9,11 @@ import {
     OutputFindCustomerDto,
 } from "../../../../usecase/customer/find/find.customer.dto"
 import FindCustomerUseCase from "../../../../usecase/customer/find/find.customer.usecase"
-import {
-    createDbInstance,
-    DatabaseTestConfig,
-} from "../../../@config/database/database.test.config"
+import { createDbInstance } from "../../../@config/database/database.test.config"
+import Database from "../../../../infrastructure/database/database-interface"
 
 describe("Integration test find customer use case", () => {
-    let db: DatabaseTestConfig
+    let db: Database
 
     beforeEach(async () => {
         db = createDbInstance([DatabaseTable.CUSTOMER])

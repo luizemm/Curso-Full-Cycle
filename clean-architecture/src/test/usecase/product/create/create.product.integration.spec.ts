@@ -7,15 +7,13 @@ import {
     OutputCreateProductDto,
 } from "../../../../usecase/product/create/create.product.dto"
 import CreateProductUseCase from "../../../../usecase/product/create/create.product.usecase"
-import {
-    createDbInstance,
-    DatabaseTestConfig,
-} from "../../../@config/database/database.test.config"
+import { createDbInstance } from "../../../@config/database/database.test.config"
+import Database from "../../../../infrastructure/database/database-interface"
 
 let input: InputCreateProductDto
 
 describe("Integration test create product use case", () => {
-    let db: DatabaseTestConfig
+    let db: Database
 
     beforeEach(async () => {
         db = createDbInstance([DatabaseTable.PRODUCT])

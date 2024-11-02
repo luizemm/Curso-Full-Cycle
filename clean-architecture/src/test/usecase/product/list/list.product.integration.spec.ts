@@ -9,10 +9,8 @@ import {
     ProductDto,
 } from "../../../../usecase/product/list/list.product.dto"
 import ListProductUseCase from "../../../../usecase/product/list/list.product.usecase"
-import {
-    createDbInstance,
-    DatabaseTestConfig,
-} from "../../../@config/database/database.test.config"
+import { createDbInstance } from "../../../@config/database/database.test.config"
+import Database from "../../../../infrastructure/database/database-interface"
 
 const products = [
     ProductFactory.create(ProductType.PRODUCT_A, "Product 1", 12),
@@ -29,7 +27,7 @@ const createProduct = async (
 }
 
 describe("Integration test list product", () => {
-    let db: DatabaseTestConfig
+    let db: Database
 
     beforeEach(async () => {
         db = createDbInstance([DatabaseTable.PRODUCT])

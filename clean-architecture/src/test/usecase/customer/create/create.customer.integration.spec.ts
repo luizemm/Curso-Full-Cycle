@@ -7,15 +7,13 @@ import {
     OutputCreateCustomerDto,
 } from "../../../../usecase/customer/create/create.customer.dto"
 import CreateCustomerUseCase from "../../../../usecase/customer/create/create.customer.usecase"
-import {
-    createDbInstance,
-    DatabaseTestConfig,
-} from "../../../@config/database/database.test.config"
+import { createDbInstance } from "../../../@config/database/database.test.config"
+import Database from "../../../../infrastructure/database/database-interface"
 
 let input: InputCreateCustomerDto
 
 describe("Integration test create customer use case", () => {
-    let db: DatabaseTestConfig
+    let db: Database
 
     beforeEach(async () => {
         db = createDbInstance([DatabaseTable.CUSTOMER])
