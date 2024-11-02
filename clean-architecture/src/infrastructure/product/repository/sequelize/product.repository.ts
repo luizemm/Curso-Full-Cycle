@@ -1,8 +1,10 @@
+import { injectable } from "inversify"
 import ProductA from "../../../../domain/product/entity/product-a"
 import Product from "../../../../domain/product/entity/product-interface"
 import ProductRepository from "../../../../domain/product/repository/product-interface.repository"
 import ProductModel from "./product.model"
 
+@injectable()
 export default class ProductRepositoryImpl implements ProductRepository {
     async create(entity: Product): Promise<void> {
         await ProductModel.create({

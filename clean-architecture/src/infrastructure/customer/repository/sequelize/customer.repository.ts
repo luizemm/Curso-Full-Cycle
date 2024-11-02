@@ -1,8 +1,10 @@
+import { injectable } from "inversify"
 import Customer from "../../../../domain/customer/entity/customer-interface"
 import CustomerRepository from "../../../../domain/customer/repository/customer-interface.repository"
 import CustomerMapper from "./customer.mapper"
 import CustomerModel from "./customer.model"
 
+@injectable()
 export default class CustomerRepositoryImpl implements CustomerRepository {
     async create(entity: Customer): Promise<void> {
         await CustomerModel.create({

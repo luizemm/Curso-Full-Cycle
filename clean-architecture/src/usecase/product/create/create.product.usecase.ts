@@ -1,3 +1,4 @@
+import { inject, injectable } from "inversify"
 import ProductType from "../../../domain/product/enum/product-type.enum"
 import ProductFactory from "../../../domain/product/factory/product.factory"
 import ProductRepository from "../../../domain/product/repository/product-interface.repository"
@@ -7,13 +8,17 @@ import {
     OutputCreateProductDto,
 } from "./create.product.dto"
 import CreateProductMapper from "./create.product.mapper"
+import TYPES from "../../../infrastructure/dependency-injection/dependency.types"
 
+@injectable()
 export default class CreateProductUseCase
     implements UseCase<InputCreateProductDto, OutputCreateProductDto>
 {
     private readonly productRepository: ProductRepository
 
-    constructor(productRepository: ProductRepository) {
+    constructor(
+        @inject(TYPES.ProductRepository) productRepository: ProductRepository
+    ) {
         this.productRepository = productRepository
     }
 
