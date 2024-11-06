@@ -1,10 +1,11 @@
 import { ERROR_MESSAGES } from "../../../error/error.messages"
-import Entity from "../../@shared/entity/entity.abstract"
+import AbstractEntity from "../../@shared/entity/entity.abstract"
+import CustomerValidatorFactory from "../factory/customer.validator.factory"
 import Address from "../value-object/address-interface"
 import Customer from "./customer-interface"
 
 // Entidade de NEGÓCIO
-export default class CustomerImpl extends Entity implements Customer {
+export default class CustomerImpl extends AbstractEntity implements Customer {
     public static readonly ERROR_CONTEXT = "customer"
 
     private _name: string
@@ -32,17 +33,7 @@ export default class CustomerImpl extends Entity implements Customer {
     // }
 
     validate() {
-        if (!this._name)
-            this.notification.addError({
-                context: CustomerImpl.ERROR_CONTEXT,
-                message: ERROR_MESSAGES.REQUIRED_FIELD.NAME,
-            })
-        if (!this._id)
-            this.notification.addError({
-                context: CustomerImpl.ERROR_CONTEXT,
-                message: ERROR_MESSAGES.REQUIRED_FIELD.ID,
-            })
-        // Outras validações ou regras
+        CustomerValidatorFactory.create().validate(this)
     }
 
     get name(): string {

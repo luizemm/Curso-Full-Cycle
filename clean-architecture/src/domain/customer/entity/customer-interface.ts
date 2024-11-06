@@ -1,7 +1,7 @@
+import Entity from "../../@shared/entity/entity-interface"
 import Address from "../value-object/address-interface"
 
-export default interface Customer {
-    get id(): string
+export default interface Customer extends Entity {
     get name(): string
     get address(): Address | undefined
     get rewardPoints(): number

@@ -1,5 +1,6 @@
-export default interface Product {
-    get id(): string
+import Entity from "../../@shared/entity/entity-interface"
+
+export default interface Product extends Entity {
     get name(): string
     get price(): number
 

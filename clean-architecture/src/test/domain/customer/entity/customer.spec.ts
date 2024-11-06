@@ -22,7 +22,7 @@ describe("Customer unit tests", () => {
     it("should throw error when id and name are empty", () => {
         expect(() => new CustomerImpl("", "")).toThrow(
             expect.objectContaining({
-                message: `${CustomerImpl.ERROR_CONTEXT}: ${ERROR_MESSAGES.REQUIRED_FIELD.NAME}, ${CustomerImpl.ERROR_CONTEXT}: ${ERROR_MESSAGES.REQUIRED_FIELD.ID}`,
+                message: `${CustomerImpl.ERROR_CONTEXT}: ${ERROR_MESSAGES.REQUIRED_FIELD.ID}, ${CustomerImpl.ERROR_CONTEXT}: ${ERROR_MESSAGES.REQUIRED_FIELD.NAME}`,
             })
         )
     })
