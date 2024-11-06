@@ -1,7 +1,7 @@
 import ProductA from "../../../../domain/product/entity/product-a"
 import { ERROR_MESSAGES } from "../../../../error/error.messages"
 
-describe("Product unit tests", () => {
+describe("Product A unit tests", () => {
     it("should throw error when id is empty", () => {
         expect(() => new ProductA("", "Product 1", 100)).toThrow(
             expect.objectContaining({
