@@ -1,6 +1,7 @@
+import ProductA from "../../../../domain/product/entity/product-a"
 import { ERROR_MESSAGES } from "../../../../error/error.messages"
-import ValidationError from "../../../../error/validation.error"
 import DatabaseTable from "../../../../infrastructure/@shared/repository/tables.enum"
+import Database from "../../../../infrastructure/database/database-interface"
 import ProductRepositoryImpl from "../../../../infrastructure/product/repository/sequelize/product.repository"
 import {
     InputCreateProductDto,
@@ -8,7 +9,6 @@ import {
 } from "../../../../usecase/product/create/create.product.dto"
 import CreateProductUseCase from "../../../../usecase/product/create/create.product.usecase"
 import { createDbInstance } from "../../../@config/database/database.test.config"
-import Database from "../../../../infrastructure/database/database-interface"
 
 let input: InputCreateProductDto
 
@@ -59,7 +59,9 @@ describe("Integration test create product use case", () => {
 
             await useCase.execute(input)
         }).rejects.toThrow(
-            new ValidationError(ERROR_MESSAGES.REQUIRED_FIELD.NAME)
+            expect.objectContaining({
+                message: `${ProductA.ERROR_CONTEXT}: ${ERROR_MESSAGES.REQUIRED_FIELD.NAME}`,
+            })
         )
 
         const products = await productRepository.findAll()
@@ -78,7 +80,9 @@ describe("Integration test create product use case", () => {
 
             await customerCreateUseCase.execute(input)
         }).rejects.toThrow(
-            new ValidationError(ERROR_MESSAGES.PRICE_MUST_BE_GREATER_EQUAL_ZERO)
+            expect.objectContaining({
+                message: `${ProductA.ERROR_CONTEXT}: ${ERROR_MESSAGES.PRICE_MUST_BE_GREATER_EQUAL_ZERO}`,
+            })
         )
 
         const products = await productRepository.findAll()

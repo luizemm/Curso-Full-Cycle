@@ -13,6 +13,7 @@ import {
 import UpdateCustomerUseCase from "../../../../usecase/customer/update/update.customer.usecase"
 import { createDbInstance } from "../../../@config/database/database.test.config"
 import Database from "../../../../infrastructure/database/database-interface"
+import CustomerImpl from "../../../../domain/customer/entity/customer"
 
 const customer: Customer = CustomerFactory.createWithAddress(
     "John",
@@ -97,7 +98,9 @@ describe("Unit test update customer use case", () => {
 
             await useCase.execute(input)
         }).rejects.toThrow(
-            new ValidationError(ERROR_MESSAGES.REQUIRED_FIELD.NAME)
+            expect.objectContaining({
+                message: `${CustomerImpl.ERROR_CONTEXT}: ${ERROR_MESSAGES.REQUIRED_FIELD.NAME}`,
+            })
         )
 
         const customerDb = await customerRepository.find(customer.id)

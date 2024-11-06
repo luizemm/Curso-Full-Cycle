@@ -1,21 +1,24 @@
 import { ERROR_MESSAGES } from "../../../error/error.messages"
-import ValidationError from "../../../error/validation.error"
+import Entity from "../../@shared/entity/entity.abstract"
 import Address from "../value-object/address-interface"
 import Customer from "./customer-interface"
 
 // Entidade de NEGÓCIO
-export default class CustomerImpl implements Customer {
-    private readonly _id: string
+export default class CustomerImpl extends Entity implements Customer {
+    public static readonly ERROR_CONTEXT = "customer"
+
     private _name: string
     private _address?: Address
     private _active: boolean = false
     private _rewardPoints: number = 0
 
     constructor(id: string, name: string) {
-        this._id = id
+        super(id)
         this._name = name
 
         this.validate()
+
+        if (this.notification.hasErrors()) this.throwNotificationError()
     }
 
     /* 
@@ -30,18 +33,16 @@ export default class CustomerImpl implements Customer {
 
     validate() {
         if (!this._name)
-            throw new ValidationError(ERROR_MESSAGES.REQUIRED_FIELD.NAME, {
-                context: this._name,
+            this.notification.addError({
+                context: CustomerImpl.ERROR_CONTEXT,
+                message: ERROR_MESSAGES.REQUIRED_FIELD.NAME,
             })
         if (!this._id)
-            throw new ValidationError(ERROR_MESSAGES.REQUIRED_FIELD.ID, {
-                context: this._id,
+            this.notification.addError({
+                context: CustomerImpl.ERROR_CONTEXT,
+                message: ERROR_MESSAGES.REQUIRED_FIELD.ID,
             })
         // Outras validações ou regras
-    }
-
-    get id(): string {
-        return this._id
     }
 
     get name(): string {
@@ -66,15 +67,20 @@ export default class CustomerImpl implements Customer {
         // Regras de negócio, se necessário
         this._name = name
         this.validate()
+        if (this.notification.hasErrors()) this.throwNotificationError()
     }
 
     activate() {
         // Regras de negócio, se necessário
         if (this._address == undefined)
-            throw new Error(
-                ERROR_MESSAGES.ADDRESS_REQUIRED_TO_ACTIVATE_CUSTOMER
-            )
+            this.notification.addError({
+                context: CustomerImpl.ERROR_CONTEXT,
+                message: ERROR_MESSAGES.ADDRESS_REQUIRED_TO_ACTIVATE_CUSTOMER,
+            })
+
         this._active = true
+
+        if (this.notification.hasErrors()) this.throwNotificationError()
     }
 
     deactivate() {

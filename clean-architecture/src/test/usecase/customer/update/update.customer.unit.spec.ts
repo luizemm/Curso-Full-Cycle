@@ -1,3 +1,4 @@
+import CustomerImpl from "../../../../domain/customer/entity/customer"
 import Customer from "../../../../domain/customer/entity/customer-interface"
 import CustomerFactory from "../../../../domain/customer/factory/customer.factory"
 import CustomerRepository from "../../../../domain/customer/repository/customer-interface.repository"
@@ -52,7 +53,7 @@ describe("Unit test update customer use case", () => {
     })
 
     it("should throw error when it does not find a customer with given id", async () => {
-        expect(async () => {
+        await expect(async () => {
             mockRepository.find.mockResolvedValueOnce(null)
 
             const useCase = new UpdateCustomerUseCase(mockRepository)
@@ -62,19 +63,21 @@ describe("Unit test update customer use case", () => {
     })
 
     it("should throw error when name is missing", async () => {
-        expect(async () => {
+        await expect(async () => {
             const useCase = new UpdateCustomerUseCase(mockRepository)
 
             input.name = ""
 
             await useCase.execute(input)
         }).rejects.toThrow(
-            new ValidationError(ERROR_MESSAGES.REQUIRED_FIELD.NAME)
+            expect.objectContaining({
+                message: `${CustomerImpl.ERROR_CONTEXT}: ${ERROR_MESSAGES.REQUIRED_FIELD.NAME}`,
+            })
         )
     })
 
     it("should throw error when street is missing", async () => {
-        expect(async () => {
+        await expect(async () => {
             const usecase = new UpdateCustomerUseCase(mockRepository)
 
             input.address!.street = ""

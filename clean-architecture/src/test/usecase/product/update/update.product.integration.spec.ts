@@ -11,6 +11,7 @@ import {
 import UpdateProductUseCase from "../../../../usecase/product/update/update.product.usecase"
 import { createDbInstance } from "../../../@config/database/database.test.config"
 import Database from "../../../../infrastructure/database/database-interface"
+import ProductA from "../../../../domain/product/entity/product-a"
 
 const product = ProductFactory.create(ProductType.PRODUCT_A, "Product 1", 100)
 
@@ -80,7 +81,9 @@ describe("Integration test update product", () => {
 
             await useCase.execute(input)
         }).rejects.toThrow(
-            new NotFoundError(ERROR_MESSAGES.REQUIRED_FIELD.NAME)
+            expect.objectContaining({
+                message: `${ProductA.ERROR_CONTEXT}: ${ERROR_MESSAGES.REQUIRED_FIELD.NAME}`,
+            })
         )
 
         const productDb = await productRepository.find(product.id)
@@ -99,7 +102,9 @@ describe("Integration test update product", () => {
 
             await useCase.execute(input)
         }).rejects.toThrow(
-            new NotFoundError(ERROR_MESSAGES.PRICE_MUST_BE_GREATER_EQUAL_ZERO)
+            expect.objectContaining({
+                message: `${ProductA.ERROR_CONTEXT}: ${ERROR_MESSAGES.PRICE_MUST_BE_GREATER_EQUAL_ZERO}`,
+            })
         )
 
         const productDb = await productRepository.find(product.id)

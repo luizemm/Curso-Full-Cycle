@@ -1,3 +1,4 @@
+import ProductA from "../../../../domain/product/entity/product-a"
 import ProductType from "../../../../domain/product/enum/product-type.enum"
 import ProductFactory from "../../../../domain/product/factory/product.factory"
 import ProductRepository from "../../../../domain/product/repository/product-interface.repository"
@@ -59,7 +60,9 @@ describe("Unit test update product", () => {
 
             await useCase.execute(input)
         }).rejects.toThrow(
-            new NotFoundError(ERROR_MESSAGES.REQUIRED_FIELD.NAME)
+            expect.objectContaining({
+                message: `${ProductA.ERROR_CONTEXT}: ${ERROR_MESSAGES.REQUIRED_FIELD.NAME}`,
+            })
         )
     })
 
@@ -71,7 +74,9 @@ describe("Unit test update product", () => {
 
             await useCase.execute(input)
         }).rejects.toThrow(
-            new NotFoundError(ERROR_MESSAGES.PRICE_MUST_BE_GREATER_EQUAL_ZERO)
+            expect.objectContaining({
+                message: `${ProductA.ERROR_CONTEXT}: ${ERROR_MESSAGES.PRICE_MUST_BE_GREATER_EQUAL_ZERO}`,
+            })
         )
     })
 })

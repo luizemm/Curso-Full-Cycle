@@ -9,6 +9,7 @@ import {
 import CreateCustomerUseCase from "../../../../usecase/customer/create/create.customer.usecase"
 import { createDbInstance } from "../../../@config/database/database.test.config"
 import Database from "../../../../infrastructure/database/database-interface"
+import CustomerImpl from "../../../../domain/customer/entity/customer"
 
 let input: InputCreateCustomerDto
 
@@ -76,7 +77,9 @@ describe("Integration test create customer use case", () => {
 
             await customerCreateUseCase.execute(input)
         }).rejects.toThrow(
-            new ValidationError(ERROR_MESSAGES.REQUIRED_FIELD.NAME)
+            expect.objectContaining({
+                message: `${CustomerImpl.ERROR_CONTEXT}: ${ERROR_MESSAGES.REQUIRED_FIELD.NAME}`,
+            })
         )
 
         const customers = await customerRepository.findAll()

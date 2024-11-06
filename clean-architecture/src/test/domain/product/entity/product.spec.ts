@@ -1,19 +1,39 @@
 import ProductA from "../../../../domain/product/entity/product-a"
+import { ERROR_MESSAGES } from "../../../../error/error.messages"
 
 describe("Product unit tests", () => {
     it("should throw error when id is empty", () => {
         expect(() => new ProductA("", "Product 1", 100)).toThrow(
-            "Id is required"
+            expect.objectContaining({
+                message: `${ProductA.ERROR_CONTEXT}: ${ERROR_MESSAGES.REQUIRED_FIELD.ID}`,
+            })
         )
     })
 
     it("should throw error when name is empty", () => {
-        expect(() => new ProductA("123", "", 100)).toThrow("Name is required")
+        expect(() => new ProductA("123", "", 100)).toThrow(
+            expect.objectContaining({
+                message: `${ProductA.ERROR_CONTEXT}: ${ERROR_MESSAGES.REQUIRED_FIELD.NAME}`,
+            })
+        )
     })
 
     it("should throw error when price less than 0", () => {
         expect(() => new ProductA("123", "123", -1)).toThrow(
-            "Price must be greater than or equal 0"
+            expect.objectContaining({
+                message: `${ProductA.ERROR_CONTEXT}: ${ERROR_MESSAGES.PRICE_MUST_BE_GREATER_EQUAL_ZERO}`,
+            })
+        )
+    })
+
+    it("should throw error when name, id and price are invalid", () => {
+        expect(() => new ProductA("", "", -1)).toThrow(
+            expect.objectContaining({
+                message:
+                    `${ProductA.ERROR_CONTEXT}: ${ERROR_MESSAGES.REQUIRED_FIELD.ID}, ` +
+                    `${ProductA.ERROR_CONTEXT}: ${ERROR_MESSAGES.REQUIRED_FIELD.NAME}, ` +
+                    `${ProductA.ERROR_CONTEXT}: ${ERROR_MESSAGES.PRICE_MUST_BE_GREATER_EQUAL_ZERO}`,
+            })
         )
     })
 

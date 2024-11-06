@@ -1,33 +1,39 @@
 import { ERROR_MESSAGES } from "../../../error/error.messages"
-import ValidationError from "../../../error/validation.error"
+import Entity from "../../@shared/entity/entity.abstract"
 import Product from "./product-interface"
 
-export default class ProductA implements Product {
-    private readonly _id: string
+export default class ProductA extends Entity implements Product {
+    public static readonly ERROR_CONTEXT = "product A"
+
     private _name: string
     private _price: number
 
     constructor(id: string, name: string, price: number) {
-        this._id = id
+        super(id)
         this._name = name
         this._price = price
 
         this.validate()
+
+        if (this.notification.hasErrors()) this.throwNotificationError()
     }
 
     validate() {
         if (!this._id)
-            throw new ValidationError(ERROR_MESSAGES.REQUIRED_FIELD.ID)
+            this.notification.addError({
+                context: ProductA.ERROR_CONTEXT,
+                message: ERROR_MESSAGES.REQUIRED_FIELD.ID,
+            })
         if (!this._name)
-            throw new ValidationError(ERROR_MESSAGES.REQUIRED_FIELD.NAME)
+            this.notification.addError({
+                context: ProductA.ERROR_CONTEXT,
+                message: ERROR_MESSAGES.REQUIRED_FIELD.NAME,
+            })
         if (!this._price || this._price < 0)
-            throw new ValidationError(
-                ERROR_MESSAGES.PRICE_MUST_BE_GREATER_EQUAL_ZERO
-            )
-    }
-
-    get id(): string {
-        return this._id
+            this.notification.addError({
+                context: ProductA.ERROR_CONTEXT,
+                message: ERROR_MESSAGES.PRICE_MUST_BE_GREATER_EQUAL_ZERO,
+            })
     }
 
     get name(): string {
@@ -42,11 +48,15 @@ export default class ProductA implements Product {
         this._name = name
 
         this.validate()
+
+        if (this.notification.hasErrors()) this.throwNotificationError()
     }
 
     changePrice(price: number) {
         this._price = price
 
         this.validate()
+
+        if (this.notification.hasErrors()) this.throwNotificationError()
     }
 }

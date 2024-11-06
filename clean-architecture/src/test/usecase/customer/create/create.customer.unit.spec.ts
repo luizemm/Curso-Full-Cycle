@@ -1,3 +1,4 @@
+import CustomerImpl from "../../../../domain/customer/entity/customer"
 import CustomerRepository from "../../../../domain/customer/repository/customer-interface.repository"
 import { ERROR_MESSAGES } from "../../../../error/error.messages"
 import ValidationError from "../../../../error/validation.error"
@@ -54,7 +55,9 @@ describe("Unit test create customer use case", () => {
 
             await useCase.execute(input)
         }).rejects.toThrow(
-            new ValidationError(ERROR_MESSAGES.REQUIRED_FIELD.NAME)
+            expect.objectContaining({
+                message: `${CustomerImpl.ERROR_CONTEXT}: ${ERROR_MESSAGES.REQUIRED_FIELD.NAME}`,
+            })
         )
     })
 

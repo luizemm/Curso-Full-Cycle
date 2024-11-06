@@ -1,6 +1,6 @@
+import ProductA from "../../../../domain/product/entity/product-a"
 import ProductRepository from "../../../../domain/product/repository/product-interface.repository"
 import { ERROR_MESSAGES } from "../../../../error/error.messages"
-import ValidationError from "../../../../error/validation.error"
 import {
     InputCreateProductDto,
     OutputCreateProductDto,
@@ -44,7 +44,9 @@ describe("Unit test create product use case", () => {
 
             await useCase.execute(input)
         }).rejects.toThrow(
-            new ValidationError(ERROR_MESSAGES.REQUIRED_FIELD.NAME)
+            expect.objectContaining({
+                message: `${ProductA.ERROR_CONTEXT}: ${ERROR_MESSAGES.REQUIRED_FIELD.NAME}`,
+            })
         )
     })
 
@@ -58,7 +60,9 @@ describe("Unit test create product use case", () => {
 
             await customerCreateUseCase.execute(input)
         }).rejects.toThrow(
-            new ValidationError(ERROR_MESSAGES.PRICE_MUST_BE_GREATER_EQUAL_ZERO)
+            expect.objectContaining({
+                message: `${ProductA.ERROR_CONTEXT}: ${ERROR_MESSAGES.PRICE_MUST_BE_GREATER_EQUAL_ZERO}`,
+            })
         )
     })
 })

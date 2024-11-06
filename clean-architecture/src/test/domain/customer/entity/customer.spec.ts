@@ -1,18 +1,29 @@
 import CustomerImpl from "../../../../domain/customer/entity/customer"
 import AddressImpl from "../../../../domain/customer/value-object/address"
 import { ERROR_MESSAGES } from "../../../../error/error.messages"
-import ValidationError from "../../../../error/validation.error"
 
 describe("Customer unit tests", () => {
     it("should throw error when id is empty", () => {
         expect(() => new CustomerImpl("", "Fulano")).toThrow(
-            new ValidationError(ERROR_MESSAGES.REQUIRED_FIELD.ID)
+            expect.objectContaining({
+                message: `${CustomerImpl.ERROR_CONTEXT}: ${ERROR_MESSAGES.REQUIRED_FIELD.ID}`,
+            })
         )
     })
 
     it("should throw error when name is empty", () => {
         expect(() => new CustomerImpl("123", "")).toThrow(
-            new ValidationError(ERROR_MESSAGES.REQUIRED_FIELD.NAME)
+            expect.objectContaining({
+                message: `${CustomerImpl.ERROR_CONTEXT}: ${ERROR_MESSAGES.REQUIRED_FIELD.NAME}`,
+            })
+        )
+    })
+
+    it("should throw error when id and name are empty", () => {
+        expect(() => new CustomerImpl("", "")).toThrow(
+            expect.objectContaining({
+                message: `${CustomerImpl.ERROR_CONTEXT}: ${ERROR_MESSAGES.REQUIRED_FIELD.NAME}, ${CustomerImpl.ERROR_CONTEXT}: ${ERROR_MESSAGES.REQUIRED_FIELD.ID}`,
+            })
         )
     })
 
