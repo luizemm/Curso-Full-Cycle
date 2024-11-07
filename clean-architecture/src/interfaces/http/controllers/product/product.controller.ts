@@ -7,6 +7,7 @@ import { InputCreateProductDto } from "../../../../usecase/product/create/create
 import { ensureError } from "../../../../error/error.util"
 import ValidationError from "../../../../error/validation.error"
 import ListProductUseCase from "../../../../usecase/product/list/list.product.usecase"
+import NotificationError from "../../../../domain/@shared/notification/notification.error"
 
 @injectable()
 export default class ProductController {
@@ -41,7 +42,10 @@ export default class ProductController {
             } catch (err) {
                 const error = ensureError(err)
 
-                if (error instanceof ValidationError)
+                if (
+                    error instanceof ValidationError ||
+                    error instanceof NotificationError
+                )
                     return {
                         statusCode: 400,
                         body: {

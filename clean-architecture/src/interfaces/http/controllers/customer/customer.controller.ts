@@ -7,6 +7,7 @@ import TYPES from "../../../../infrastructure/dependency-injection/dependency.ty
 import ValidationError from "../../../../error/validation.error"
 import { ensureError } from "../../../../error/error.util"
 import ListCustomerUseCase from "../../../../usecase/customer/list/list.customer.usecase"
+import NotificationError from "../../../../domain/@shared/notification/notification.error"
 
 @injectable()
 export default class CustomerController {
@@ -49,7 +50,10 @@ export default class CustomerController {
             } catch (err) {
                 const error = ensureError(err)
 
-                if (error instanceof ValidationError)
+                if (
+                    error instanceof ValidationError ||
+                    error instanceof NotificationError
+                )
                     return {
                         statusCode: 400,
                         body: {
