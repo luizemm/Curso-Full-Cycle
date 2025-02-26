@@ -35,7 +35,15 @@ describe("ClientAdmFacade", () => {
             id: "1",
             name: "Client 1",
             email: "client1@email.com",
-            address: "Address 1",
+            document: "Document",
+            address: {
+                street: "Street 1",
+                number: "1",
+                complement: "",
+                city: "City 1",
+                state: "State 1",
+                zipCode: "12345-678",
+            },
         }
 
         await facade.add(input)
@@ -48,7 +56,15 @@ describe("ClientAdmFacade", () => {
             id: clientDb!.id,
             name: clientDb!.name,
             email: clientDb!.email,
-            address: clientDb!.address,
+            document: clientDb!.document,
+            address: {
+                street: clientDb!.street,
+                number: clientDb!.number,
+                complement: clientDb!.complement,
+                city: clientDb!.city,
+                state: clientDb!.state,
+                zipCode: clientDb!.zipCode,
+            },
         } as AddClientFacadeInputDto).toStrictEqual(input)
     })
 
@@ -61,7 +77,13 @@ describe("ClientAdmFacade", () => {
             id: "1",
             name: "Client 1",
             email: "client1@email.com",
-            address: "Address 1",
+            document: "Document",
+            street: "Street 1",
+            number: "1",
+            complement: "",
+            city: "City 1",
+            state: "State 1",
+            zipCode: "12345-678",
             createdAt: createdDate,
             updatedAt: createdDate,
         }
@@ -78,7 +100,15 @@ describe("ClientAdmFacade", () => {
             id: client.id,
             name: client.name,
             email: client.email,
-            address: client.address,
+            document: client.document,
+            address: {
+                street: client.street,
+                number: client.number,
+                complement: client.complement,
+                city: client.city,
+                state: client.state,
+                zipCode: client.zipCode,
+            },
             createdAt: client.createdAt,
             updatedAt: client.updatedAt,
         } as FindClientFacadeOutputDto)
