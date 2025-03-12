@@ -2,7 +2,7 @@ import Id from "../../@shared/domain/value-object/id.value-object"
 import Product from "../domain/product.entity"
 import ProductGateway from "../gateway/product.gateway"
 import { ERROR_MESSAGES } from "../util/message/error.messages"
-import { ProductModel } from "./product.model"
+import ProductModel from "./product.model"
 
 export default class ProductRepository implements ProductGateway {
     async add(product: Product): Promise<void> {
@@ -13,6 +13,7 @@ export default class ProductRepository implements ProductGateway {
             name: product.name,
             description: product.description,
             purchasePrice: product.purchasePrice,
+            salesPrice: product.purchasePrice,
             stock: product.stock,
             createdAt: dateNow,
             updatedAt: dateNow,

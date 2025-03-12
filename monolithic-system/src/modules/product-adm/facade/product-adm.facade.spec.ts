@@ -1,12 +1,12 @@
 import { Sequelize } from "sequelize-typescript"
 import ProductAdmFacadeFactory from "../factory/facade.factory"
-import { ProductModel } from "../repository/product.model"
+import ProductModel from "../repository/product.model"
+import { ERROR_MESSAGES } from "../util/message/error.messages"
 import {
     AddProductFacadeInputDto,
     CheckStockFacadeInputDto,
     CheckStockFacadeOutputDto,
 } from "./product-adm.facade.dto"
-import { ERROR_MESSAGES } from "../util/message/error.messages"
 
 describe("Product Adm Facade integration test", () => {
     let sequelize: Sequelize
@@ -64,6 +64,7 @@ describe("Product Adm Facade integration test", () => {
             name: "Product 1",
             description: "Description",
             purchasePrice: 100,
+            salesPrice: 100,
             stock: 10,
             createdAt: new Date(),
             updatedAt: new Date(),

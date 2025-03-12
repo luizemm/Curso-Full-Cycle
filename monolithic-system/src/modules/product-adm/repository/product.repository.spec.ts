@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize-typescript"
-import { ProductModel } from "./product.model"
+import ProductModel from "./product.model"
 import Product from "../domain/product.entity"
 import Id from "../../@shared/domain/value-object/id.value-object"
 import ProductRepository from "./product.repository"
@@ -78,7 +78,10 @@ describe("Product repository test", () => {
             updatedAt: dateNow,
         }
 
-        await ProductModel.create(product)
+        await ProductModel.create({
+            ...product,
+            salesPrice: product.purchasePrice,
+        })
 
         const productDb = await repository.find(product.id)
 
